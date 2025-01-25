@@ -15,7 +15,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 + First clone the the github repository
 
 ```
-git clone [https://github.com/Shovickbarua/wordpress-react-tailwind-plugin-boilerplate.git](https://github.com/Shovickbarua/task-manager.git)
+git clone https://github.com/Shovickbarua/task-manager.git
 ```
 
 ## Laravel Sponsors
