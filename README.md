@@ -1,55 +1,163 @@
-## Task Management API with Authentication
+# Task Management API with Authentication
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Overview
+This is a RESTful API for managing tasks built using Laravel. It includes user authentication via Laravel Sanctum.
 
-### Features
-
+## Features
 - User authentication (register, login, and token-based authentication).
 - Task management (create, retrieve, update, and delete tasks).
 - Input validation and error handling.
 - Unit tests for API endpoints, including authentication.
 
+---
 
-## Setup
+## Setup Instructions
 
-+ First clone the the github repository
+### Prerequisites
+- PHP >= 8.1
+- Composer
+- MySQL
+- Laravel Installer
+- Postman (optional, for testing)
 
-```
-git clone https://github.com/Shovickbarua/task-manager.git
-```
+### Installation
+- Clone the repository:
+   ```bash
+   git clone https://github.com/Shovickbarua/task-manager.git
+   cd task-manager
+   ```
 
-## Laravel Sponsors
+- Install dependencies:
+   ```bash
+   composer install
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- Copy the example environment file and set up environment variables:
+   ```bash
+   cp .env.example .env
+   ```
+   Update the `.env` file with your database credentials and other configurations.
 
-### Premium Partners
+- Generate the application key:
+   ```bash
+   php artisan key:generate
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- Run migrations to set up the database:
+   ```bash
+   php artisan migrate
+   ```
 
-## Contributing
+- Start the development server:
+   ```bash
+   php artisan serve
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## API Endpoints
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Authentication Endpoints
 
-## Security Vulnerabilities
+#### Register
+- **URL**: `POST /api/register`
+- **Request Body**:
+  ```json
+  {
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "password": "password",
+  }
+  ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#### Login
+- **URL**: `POST /api/login`
+- **Request Body**:
+  ```json
+  {
+    "email": "johndoe@example.com",
+    "password": "password"
+  }
+  ```
 
-## License
+### Task Endpoints
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### Create a Task
+- **URL**: `POST /api/tasks`
+- **Headers**: `Authorization: Bearer your-auth-token`
+- **Request Body**:
+  ```json
+  {
+    "title": "New Task",
+    "description": "Task description"
+  }
+  ```
+
+#### Retrieve Tasks
+- **URL**: `GET /api/tasks`
+- **Headers**: `Authorization: Bearer your-auth-token`
+- **Response**:
+  ```json
+  {
+    "status",
+      "data":{
+          "data":{   
+              "id": 1,
+              "title": "New Task",
+              "description": "Task description",
+              "status": "pending",
+              "created_at": "..."
+          }
+        } 
+  }
+  ```
+
+#### Mark a Task as Completed
+- **URL**: `PUT /api/tasks/{id}`
+- **Headers**: `Authorization: Bearer your-auth-token`
+- **Response**:
+  ```json
+  {
+    "status",
+      "data":{
+          "data":{   
+              "id": 1,
+              "title": "New Task",
+              "description": "Task description",
+              "status": "completed",
+              "created_at": "..."
+          }
+        } 
+  }
+  ```
+
+#### Delete a Task
+- **URL**: `DELETE /api/tasks/{id}`
+- **Headers**: `Authorization: Bearer your-auth-token`
+- **Response**:
+  ```json
+  {
+   "data:{
+    "message": "Task deleted successfully."
+   }
+  }
+  ```
+
+---
+
+## Testing the API
+
+### Using Postman
+1. Register a user via `POST /api/register`.
+2. Log in via `POST /api/login` to get the authentication token.
+3. Use the token in the `Authorization` header for subsequent requests.
+4. Test the task management endpoints.
+
+### Running Unit Tests
+1. Set up a testing database in `.env.testing`.
+2. Run the tests:
+   ```bash
+   php artisan test
+   ```
+
+
