@@ -22,7 +22,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return $this->sendError(['message' => 'Authentication Error']);
+            return $this->sendError(['message' => 'Authentication Error'], 401);
         }
         $token = $user->createToken('auth_token')->plainTextToken;
 

@@ -16,7 +16,7 @@ trait CommonTrait
     public function sendError($error, $code = 404)
     {
         $response = $this->getFormatedErrors($error, $code);
-        return response()->json($response, 404);
+        return response()->json($response, $code);
     }
 
     public function getFormatedErrors($error, $code)
