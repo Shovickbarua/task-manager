@@ -137,7 +137,7 @@ This is a RESTful API for managing tasks built using Laravel. It includes user a
 - **Response**:
   ```json
   {
-   "data:{
+   "data":{
     "message": "Task deleted successfully."
    }
   }
