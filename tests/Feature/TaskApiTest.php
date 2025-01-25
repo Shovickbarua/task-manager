@@ -23,41 +23,41 @@ class TaskApiTest extends TestCase
         return ['Authorization' => 'Bearer ' . $token];
     }
 
-    // public function test_create_task()
-    // {
-    //     $headers = $this->authenticateUser();
+    public function test_create_task()
+    {
+        $headers = $this->authenticateUser();
 
-    //     $response = $this->postJson('/api/tasks', [
-    //         'title' => 'Test Task',
-    //         'description' => 'This is a test task',
-    //     ], $headers);
+        $response = $this->postJson('/api/tasks', [
+            'title' => 'Test Task',
+            'description' => 'This is a test task',
+        ], $headers);
 
-    //     $response->assertStatus(201)
-    //          ->assertJsonStructure([
-    //              'status', 
-    //              'data' => [ 
-    //                  'data' => [
-    //                     'id',
-    //                     'title',
-    //                     'description',
-    //                     'created_at',
-    //                     'updated_at',
-    //                  ],
-    //              ],
-    //          ]);
-    // }
+        $response->assertStatus(201)
+             ->assertJsonStructure([
+                 'status', 
+                 'data' => [ 
+                     'data' => [
+                        'id',
+                        'title',
+                        'description',
+                        'created_at',
+                        'updated_at',
+                     ],
+                 ],
+             ]);
+    }
 
-    // public function test_retrieve_tasks()
-    // {
-    //     $headers = $this->authenticateUser();
+    public function test_retrieve_tasks()
+    {
+        $headers = $this->authenticateUser();
 
-    //     Task::factory()->count(3)->create();
+        Task::factory()->count(3)->create();
 
-    //     $response = $this->getJson('/api/tasks', $headers);
+        $response = $this->getJson('/api/tasks', $headers);
 
-    //     $response->assertStatus(200)
-    //              ->assertJsonCount(3);
-    // }
+        $response->assertStatus(200)
+                 ->assertJsonCount(3);
+    }
 
     public function test_mark_task_as_completed()
     {
@@ -65,7 +65,7 @@ class TaskApiTest extends TestCase
 
         $task = Task::factory()->create();
 
-        $response = $this->putJson("/api/tasks/{$task->id}", $headers);
+        $response = $this->putJson("/api/tasks/{$task->id}", [], $headers);
 
         $response->assertStatus(200)
              ->assertJson([
@@ -85,7 +85,7 @@ class TaskApiTest extends TestCase
 
         $task = Task::factory()->create();
 
-        $response = $this->deleteJson("/api/tasks/{$task->id}", $headers);
+        $response = $this->deleteJson("/api/tasks/{$task->id}", [], $headers);
 
         $response->assertStatus(200)
                  ->assertJson([
